@@ -56,25 +56,56 @@
 		</div>
 		<hr>
 		<div align="center">
-			<form action="https://cmpe.sjsu.edu/profile/frank-lin" method="POST">
-				<input type="text" name="algo" placeholder="Enter Algo" required>
-				<input type="submit" value="whip">
+			<form onsubmit="validate()" action="https://cmpe.sjsu.edu/profile/frank-lin" method="POST" id="form" name="form">
+				<input type="text" name="algo" placeholder="Enter Algo" class="algo" required>
+				<input type="submit" onclick="validate()" value="whip">
 			</form>
 		</div>
 		<article>
 		<h3><i>JavaScript Section #Under Construction# </i> </h3><br>
-		<script src="demo.js">
-			//document.write("Hello Algo!");
-			//alert("Warning! You're Gay!");
-			document.write("ass");
-		</script>
-
-
-
-
-
 
 		</article>
+		<article class="time">
+			This is orange: <br>
+		</article>
+		<article class="time">
+			<div class="under">Test</div>
+			<img id="image" src="Orange.png" alt="Orange" height="30%" width="300%">
+		</article>
+		<button onclick="func()">Click</button>
+		<style>
+			#container {
+			 width: 200px;
+			 height: 200px;
+			 background: blue;
+			 position: relative;
+			}
+			#box {
+			 width: 50px;
+			 height: 50px;
+			 background: orange;
+			 position: absolute;
+			}
+			</style>
+			<div id="container">
+			  <div id="box"> </div>
+			</div>
+		<div>
+ 			<button onclick="prev()"> Prev </button>
+ 			<img id="slider" src="http://www.sololearn.com/uploads/slider/1.jpg"
+  			 width="200px" height="100px"/>
+ 			<button onclick="next()"> Next </button>
+		</div>
+
+		<article>
+			<br>
+			<font size="1">Ari's Gay Pipe it up section</font>
+		</article>
+		<footer>
+			<script src="demo.js"></script>
+		</footer>
+
+
 	</body>
 
 
