@@ -162,7 +162,11 @@ function iKnow(){
 	
 }
 var pipe = 50;
+var vid = document.getElementById("trance");
+
 function setWheel(){
+	bubble.innerHTML = "Piped";
+	vid.play();
 	setInterval(reinventingTheWheel,5);
 }
 function reinventingTheWheel(){
