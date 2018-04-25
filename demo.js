@@ -201,22 +201,22 @@ var up = false;
 var box = document.getElementById("box");
 
 function moveRight(){
-	pos += 3;
+	pos += 2;
    	box.style.left = pos+"px";
 }
 
 function moveDown(){
-	vert +=3;
+	vert +=2;
 	box.style.top = vert+"px";
 }
 
 function moveLeft(){
-	pos -=3;
+	pos -=2;
 	box.style.left = pos+"px";
 }
 
 function moveUp(){
-	vert -=3;
+	vert -=2;
 	box.style.top = vert+"px";
 }
 
