@@ -48,7 +48,7 @@ document.write("<br>"+"You were confirmed ugly at: "+d+" specifically at: "+d.ge
 let elem = document.getElementsByClassName("time");
 //elem[1].innerHTML = "Wait, What?";
 var elem1 = document.getElementById("image");
-elem1.src = "red.jpg";
+elem1.src = "/static/images/red.jpg";
 
 //document.body.style.color = "749812";
 elem[1].style.color = "red";
