@@ -1,0 +1,90 @@
+:root {
+    --scale: 2;
+    --standard-width: 100px;
+    --size: calc(var(--standard-width) * var(--scale));
+    --base-offset: 20px;
+    --section-multiplier: 1
+}
+.section-whip, .section-seating, .section-trophy, .section-pipe,
+.section-itup {
+    position: relative;
+    background-color: rgb(60, 67, 68);
+    border-radius: 25px;
+	width: var(--size);
+    height: var(--size);
+}
+/* Section Offsets */
+.section-whip {
+    position: absolute;
+    top: var(--base-offset); 
+    left: var(--base-offset);
+}
+.section-seating {
+    position: absolute;
+    top: var(--base-offset); 
+    left: calc(var(--base-offset) * 2 + var(--size) * 1);
+}
+.section-trophy {
+    position: absolute;
+    top: var(--base-offset);
+    left: calc(var(--base-offset) * 3 + var(--size) * 2);
+}
+.section-pipe {
+    position: absolute;
+    top: calc(var(--base-offset) * 2 + var(--size) * 1);
+    left: var(--base-offset);
+	/* width: calc(calc(var(--size) + var(--base-offset)) * var(--section-multiplier) - var(--base-offset)); */
+}
+.section-itup {
+    position: absolute;
+    top: calc(var(--base-offset) * 2 + var(--size) * 1);
+    left: calc(var(--base-offset) * 2 + var(--size) * 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Section Elements */
+.element-lilpipe {
+    position: relative;
+    background-color: rgb(43, 116, 194);
+    border-radius: 25px;
+	width: calc(var(--size) / 3);
+    height: calc(var(--size) / 3);
+}
+.element-text {
+    position: absolute;
+    color: rgb(197, 197, 197);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: calc(13px  * var(--scale));
+    font-weight: 600;
+    top: 5%;
+    left: 10%;
+}
+.element-icon {
+    position: absolute;
+    width: calc(60px  * var(--scale));
+    top: 25%;
+    left: 20%;
+}
+.button-pipe, .button-it, .button-up {
+    position: absolute;
+    background-color: rgb(95, 81, 146);
+    color: rgb(0, 0, 0);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: calc(13px  * var(--scale));
+    font-weight: 600;
+    border-radius: 10px;
+}
+.button-pipe {
+    top: 10%;
+    padding: 0px calc(12.5px  * var(--scale));
+}
+.button-it {
+    top: 40%;
+    padding: 0px calc(20px  * var(--scale));
+}
+.button-up {
+    top: 70%;
+    padding: 0px calc(20px  * var(--scale));
+}

@@ -1,0 +1,76 @@
+body {
+    background-color:rgb(37, 43, 44);
+}
+
+.landing-pipe {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	width: 250px;
+}
+
+.pipe-text {
+    color: rgb(179, 40, 40);
+    font-size: 60px;
+    font-weight: 600;
+    min-width: 500px;
+    font-family: 'Courier New', Courier, monospace;
+    position: fixed;
+    top: 35%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+.pipe-text span {
+    position: relative;
+}
+
+.pipe-text span::before {
+    content: "Up";
+    color: #ca3b10;
+    animation: words 16s infinite;
+
+}
+
+.pipe-text span::after {
+    content: "";
+    position: absolute;
+    width: calc(100% + 8px);
+    height: 100%;
+    background-color:rgb(37, 43, 44);
+    border-left: 2px solid #ca3b10;
+    right: -8px;
+    animation: cursor 1s infinite, typing 20s steps(20) infinite;
+}
+
+@keyframes cursor {
+    to{
+        border-left: 2px solid #ca3b10;
+    }
+}
+
+@keyframes words {
+    0%,25%{
+        content: "Up";
+    }
+    26%,50%{
+        content: "Down";
+    }
+    51%,75%{
+        content: "Left";
+    }
+    76%,100%{
+        content: "Right";
+    }
+}
+
+@keyframes typing {
+    10%,15%,30%,35%,50%,55%,70%,75%,90%,95%{
+        width: 0;
+    }
+    5%,20%,25%,40%,45%,60%,65%,80%,85%{
+        width: calc(100% + 8px);
+    }
+}
