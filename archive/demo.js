@@ -158,8 +158,6 @@ function iKnow(){
 			document.getElementById("container").style.background = "RoyalBlue";
 		}
 	}
-	
-	
 }
 var pipe = 50;
 var vid = document.getElementById("trance");

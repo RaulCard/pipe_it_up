@@ -1,0 +1,15 @@
+.video {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 700px;
+    min-width: 50%;
+}
+.seated {
+    position: fixed;
+    bottom: 0%;
+	width: 300px;
+    left: 50%;
+    transform: translate(-50%,0)
+}
