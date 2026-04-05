@@ -1,0 +1,155 @@
+/*
+ * trophy.css — Styles for the trophy case page (trophy.html)
+ *
+ * LAYOUT:
+ *   Fixed header with back link, title, and achievement counter.
+ *   Below that, a responsive CSS grid of trophy cards.
+ *   Cards auto-wrap to fill the available width (auto-fill).
+ *
+ * CARD STATES:
+ *   .trophy-card.unlocked — purple border + glow, lifts on hover
+ *   .trophy-card.locked   — dimmed + greyscale, all text hidden
+ *
+ * ADDING ACHIEVEMENTS:
+ *   Just add to the ACHIEVEMENTS array in config.js.
+ *   trophy.js generates the cards automatically — no CSS changes needed
+ *   unless you want a new visual state beyond locked/unlocked.
+ */
+
+
+/* Global reset — prevents browser default margin/padding from
+   throwing off spacing calculations */
+* {
+    box-sizing: border-box;
+    margin:     0;
+    padding:    0;
+}
+
+body {
+    background-color: #252b2c;          /* Matches the dark background across all pages */
+    color:            rgb(197, 197, 197);
+    font-family:      'Courier New', Courier, monospace;
+    min-height:       100vh;
+    padding-bottom:   60px;             /* Prevents last card from being flush with viewport bottom */
+}
+
+
+/* =============================================================
+   HEADER
+   Fixed to the top of the page. Contains:
+     .back-link     — returns to pipe.html
+     .trophy-title  — page heading
+     .trophy-count  — "X / Y" achievements counter (set by trophy.js)
+   ============================================================= */
+.trophy-header {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;  /* Spreads back link, title, count across full width */
+    padding:         24px 40px;
+    border-bottom:   1px solid rgba(255, 255, 255, 0.08);  /* Subtle separator line */
+}
+
+.back-link {
+    color:           rgb(95, 81, 146);  /* Purple, consistent with button colour in pipe.css */
+    text-decoration: none;
+    font-size:       16px;
+    font-weight:     600;
+    transition:      color 0.2s;        /* Smooth hover colour fade */
+}
+.back-link:hover {
+    color: rgb(140, 120, 200);          /* Lighter purple on hover */
+}
+
+.trophy-title {
+    font-size:      28px;
+    font-weight:    600;
+    color:          rgb(220, 220, 220);
+    letter-spacing: 2px;
+}
+
+/* Dynamically updated by trophy.js to show "X / Y" */
+.trophy-count {
+    font-size:   16px;
+    color:       rgb(95, 81, 146);
+    font-weight: 600;
+}
+
+
+/* =============================================================
+   TROPHY GRID
+   CSS grid that auto-fills columns based on available width.
+   Cards are at least 180px wide, and grow to fill the row.
+   This means on wide screens you get more columns automatically,
+   and on narrow screens cards stack — no media queries needed.
+   ============================================================= */
+.trophy-grid {
+    display:               grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap:                   20px;
+    padding:               40px;
+    max-width:             1000px;  /* Keeps the grid from sprawling too wide */
+    margin:                0 auto;  /* Centres the grid horizontally */
+}
+
+
+/* =============================================================
+   TROPHY CARDS
+   Base styles shared by all cards, then .unlocked and .locked
+   variants override specific properties.
+   ============================================================= */
+
+/* Base card — dark tile, rounded corners, transparent border
+   (border is always present to prevent layout shift on unlock) */
+.trophy-card {
+    background:    rgb(60, 67, 68);
+    border-radius: 16px;
+    padding:       28px 16px 20px;
+    text-align:    center;
+    transition:    transform 0.15s, box-shadow 0.15s;
+    border:        2px solid transparent;  /* Placeholder so .unlocked border doesn't shift layout */
+}
+
+/* UNLOCKED — shows real content, purple border, ambient glow */
+.trophy-card.unlocked {
+    border-color: rgb(95, 81, 146);
+    box-shadow:   0 0 12px rgba(95, 81, 146, 0.3);
+}
+
+/* LOCKED — dimmed and greyscale so it reads as "not yet earned" */
+.trophy-card.locked {
+    opacity: 0.5;
+    filter:  grayscale(1);
+}
+
+/* Hover only applies to unlocked cards — locked cards shouldn't feel interactive */
+.trophy-card.unlocked:hover {
+    transform:  translateY(-4px);                       /* Lifts the card slightly */
+    box-shadow: 0 6px 20px rgba(95, 81, 146, 0.45);    /* Stronger glow on hover */
+}
+
+
+/* --- Card internals --- */
+
+/* Large emoji or symbol shown at the top of each card.
+   Locked cards show ❓ here instead of the real symbol. */
+.trophy-symbol {
+    font-size:     48px;
+    margin-bottom: 12px;
+    line-height:   1;  /* Prevents extra line-height from pushing content down */
+}
+
+/* Achievement name. Locked cards show "???" */
+.trophy-name {
+    font-size:      15px;
+    font-weight:    600;
+    color:          rgb(220, 220, 220);
+    margin-bottom:  8px;
+    letter-spacing: 1px;
+}
+
+/* Short flavour text. Locked cards show "Not yet unlocked." */
+.trophy-desc {
+    font-size:   12px;
+    color:       rgb(140, 140, 140);
+    line-height: 1.5;
+}

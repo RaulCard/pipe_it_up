@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/style/pipe.css" />
+    <title>Pipe It Up</title>
+</head>
+
+<!--
+    pipe.html — Main tile grid page
+    
+    TILE LAYOUT (3 columns × 3 rows):
+    
+      [Whip It Up]  ——  [Take A Seat]  ——  [Trophy Case]
+            |                  |                  |
+      [Pipe/Box ]  ——  [It Up/Btns]  ——  [??? Grunt ]
+            |                  |                  |
+      [Sim.Outsk.]  ——  [Am I Ugly?]  ——  [Lemon Time]
+    
+    HOW TO ADD A TILE:
+      1. Copy a tile block below (div + pipe connectors).
+      2. Give it a new id="tile-yourname" and class="section-yourname tile".
+      3. Add the matching CSS rule in pipe.css (see the layout formula there).
+      4. Add pipe connectors around it — one --h per horizontal neighbour,
+         one --v per vertical neighbour. Position them via inline style.
+      5. Build the tile's JS in static/coffee/ and import it at the bottom.
+    
+    HOW PIPE CONNECTORS WORK:
+      .pipe-connector--h  =  horizontal bar filling the --base-offset gap
+                              between two side-by-side tiles.
+      .pipe-connector--v  =  vertical bar filling the --base-offset gap
+                              between two stacked tiles.
+      The top/left inline styles position the connector in the gap.
+      margin-top / margin-left (set in pipe.css) centres it on the tile edge.
+    
+    PLACEHOLDER TILES:
+      Tiles not yet implemented use class="section-placeholder tile placeholder".
+      They render faded with a dashed border and "Coming Soon" text.
+      When building a tile out, swap section-placeholder for section-yourname
+      and remove the placeholder-label div.
+-->
+
+<body style="background-color:#252b2c">
+
+    <!-- =========================================================
+         ROW 1:  Whip It Up  |  Take A Seat  |  Trophy Case
+         ========================================================= -->
+
+    <!-- Tile 1-1: Whip It Up (placeholder — not yet implemented) -->
+    <div class="section-whip tile" id="tile-whip">
+        <div class="element-text">Whip It Up</div>
+        <img src="static/images/tiles/whip.png" class="element-icon" alt="Whip">
+    </div>
+
+    <!-- Horizontal connector between Whip (col 1) and Take A Seat (col 2) -->
+    <div class="pipe-connector pipe-connector--h" style="top: 80px; left: 240px;"></div>
+
+    <!-- Tile 1-2: Take A Seat — links to take_a_seat.html -->
+    <div class="section-seating tile" id="tile-seating">
+        <div class="element-text">Take A Seat</div>
+        <a href="take_a_seat.html" target="_self">
+            <img src="static/images/tiles/seat.png" class="element-icon" alt="Seat">
+        </a>
+    </div>
+
+    <!-- Horizontal connector between Take A Seat (col 2) and Trophy Case (col 3) -->
+    <div class="pipe-connector pipe-connector--h" style="top: 80px; left: 480px;"></div>
+
+    <!-- Tile 1-3: Trophy Case — links to trophy.html -->
+    <div class="section-trophy tile" id="tile-trophy">
+        <div class="element-text">Trophy Case</div>
+        <a href="trophy.html" target="_self">
+            <img src="static/images/tiles/trophy.png" class="element-icon" alt="Trophy">
+        </a>
+    </div>
+
+    <!-- Vertical connectors linking Row 1 down to Row 2 (one per column) -->
+    <div class="pipe-connector pipe-connector--v" style="top: 240px; left: 100px;"></div>  <!-- Col 1 -->
+    <div class="pipe-connector pipe-connector--v" style="top: 240px; left: 340px;"></div>  <!-- Col 2 -->
+    <div class="pipe-connector pipe-connector--v" style="top: 240px; left: 580px;"></div>  <!-- Col 3 -->
+
+
+    <!-- =========================================================
+         ROW 2:  Pipe (box) | It Up (buttons) | ??? (grunt, TBD)
+         ========================================================= -->
+
+    <!-- Tile 2-1: Pipe — contains the lilpipe bouncing box.
+         Animated by pipe.js. Buttons will increase speed / trigger escape. -->
+    <div class="section-pipe tile" id="tile-pipe">
+        <!-- lilpipe is the small blue square that bounces around.
+             pipe.js moves it by setting style.left and style.top. -->
+        <div id="lilpipe" class="element-lilpipe"></div>
+    </div>
+
+    <!-- Horizontal connector between Pipe (col 1) and It Up (col 2) -->
+    <div class="pipe-connector pipe-connector--h" style="top: 320px; left: 240px;"></div>
+
+    <!-- Tile 2-2: It Up — three buttons (Pipe / It / Up).
+         Wire these to functions in a tile JS file when implementing. -->
+    <div class="section-itup tile" id="tile-itup">
+        <!-- Pipe: increases lilpipe speed. Enough clicks → escape! -->
+        <button class="button-pipe" id="btn-pipe">Pipe</button>
+        <!-- It: currently undefined / reserved for future use -->
+        <button class="button-it"   id="btn-it">It</button>
+        <!-- Up: plays audio + starts colour-cycling the lilpipe tile -->
+        <button class="button-up"   id="btn-up">Up</button>
+    </div>
+
+    <!-- Horizontal connector between It Up (col 2) and Grunt tile (col 3) -->
+    <div class="pipe-connector pipe-connector--h" style="top: 320px; left: 480px;"></div>
+
+    <!-- Tile 2-3: Mystery tile (Grunt / hidden audio).
+         PLACEHOLDER — replace section-placeholder + placeholder-label
+         when implementing. See instructions at top of file. -->
+    <div class="section-placeholder tile" id="tile-grunt"
+         style="top: calc(var(--base-offset) * 2 + var(--size) * 1);
+                left: calc(var(--base-offset) * 3 + var(--size) * 2);">
+        <div class="element-text">???</div>
+        <div class="placeholder-label">Coming Soon</div>
+    </div>
+
+    <!-- Vertical connectors linking Row 2 down to Row 3 (one per column) -->
+    <div class="pipe-connector pipe-connector--v" style="top: 480px; left: 100px;"></div>  <!-- Col 1 -->
+    <div class="pipe-connector pipe-connector--v" style="top: 480px; left: 340px;"></div>  <!-- Col 2 -->
+    <div class="pipe-connector pipe-connector--v" style="top: 480px; left: 580px;"></div>  <!-- Col 3 -->
+
+
+    <!-- =========================================================
+         ROW 3:  Similar Outskirts | Am I Ugly? | Lemon Time
+         All placeholders — implement one at a time.
+         ========================================================= -->
+
+    <!-- Tile 3-1: Similar Outskirts — plays a Troy song -->
+    <div class="section-placeholder tile" id="tile-outskirts"
+         style="top:  calc(var(--base-offset) * 3 + var(--size) * 2);
+                left: var(--base-offset);">
+        <div class="element-text">Similar Outskirts</div>
+        <div class="placeholder-label">Coming Soon</div>
+    </div>
+
+    <!-- Horizontal connector between Similar Outskirts (col 1) and Am I Ugly? (col 2) -->
+    <div class="pipe-connector pipe-connector--h" style="top: 560px; left: 240px;"></div>
+
+    <!-- Tile 3-2: Am I Ugly? — random score, fish or thumbs up result -->
+    <div class="section-placeholder tile" id="tile-ugly"
+         style="top:  calc(var(--base-offset) * 3 + var(--size) * 2);
+                left: calc(var(--base-offset) * 2 + var(--size) * 1);">
+        <div class="element-text">Am I Ugly?</div>
+        <div class="placeholder-label">Coming Soon</div>
+    </div>
+
+    <!-- Horizontal connector between Am I Ugly? (col 2) and Lemon Time (col 3) -->
+    <div class="pipe-connector pipe-connector--h" style="top: 560px; left: 480px;"></div>
+
+    <!-- Tile 3-3: Lemon Time — drag broccoli onto lemon to trigger chick animation -->
+    <div class="section-placeholder tile" id="tile-lemon"
+         style="top:  calc(var(--base-offset) * 3 + var(--size) * 2);
+                left: calc(var(--base-offset) * 3 + var(--size) * 2);">
+        <div class="element-text">Lemon Time</div>
+        <div class="placeholder-label">Coming Soon</div>
+    </div>
+
+
+    <!-- =========================================================
+         SCRIPTS
+         pipe.js uses ES module imports, so type="module" is required.
+         Add additional tile JS files here as you implement them.
+         Each tile's JS should be its own file in static/coffee/.
+         ========================================================= -->
+    <footer>
+        <script type="module" src="static/coffee/pipe.js"></script>
+    </footer>
+
+</body>
+</html>
