@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+    trophy.html — Trophy Case page
+    
+    OVERVIEW:
+      Displays one card per achievement defined in config.js.
+      Locked achievements show ❓ / ??? so players know something
+      exists without revealing what it is. Unlocked ones show the
+      real symbol, name, and flavour text.
+    
+    HOW IT WORKS:
+      This file is just structure — no achievement logic lives here.
+      trophy.js reads the achievement list from config.js and the
+      unlock state from localStorage (via achievements.js), then
+      dynamically builds and injects the cards into #trophy-grid.
+    
+    HOW TO ADD A NEW ACHIEVEMENT:
+      1. Add an entry to the ACHIEVEMENTS array in config.js
+      2. Call unlock('your_id') from the relevant tile JS when earned
+      That's it — this file doesn't need to change.
+    
+    DEPENDENCIES:
+      static/style/trophy.css     ← all styles for this page
+      static/coffee/trophy.js     ← generates the achievement cards
+      static/coffee/config.js     ← achievement definitions (imported by trophy.js)
+      static/coffee/achievements.js ← localStorage read/write (imported by trophy.js)
+    
+    NOTE ON type="module":
+      The script tag uses type="module" so trophy.js can use ES module
+      imports (import { ACHIEVEMENTS } from './config.js' etc.).
+      This requires the page to be served over HTTP — it will NOT work
+      if you open the file directly in a browser via file://.
+      Use a local dev server (e.g. `npx serve pipe_redux` or VS Code
+      Live Server) during development.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/style/trophy.css" />
+    <title>Trophy Case — Pipe It Up</title>
+</head>
+<body>
+
+    <!-- =========================================================
+         HEADER
+         Three items spaced across the full width (see trophy.css):
+           .back-link     — returns to the main tile grid
+           .trophy-title  — page heading
+           .trophy-count  — "X / Y" filled in by trophy.js on load
+         ========================================================= -->
+    <header class="trophy-header">
+
+        <!-- Returns to pipe.html (the main tile grid) -->
+        <a href="pipe.html" class="back-link">← Back</a>
+
+        <h1 class="trophy-title">Trophy Case</h1>
+
+        <!-- Starts as "0 / 0" — trophy.js overwrites this with the
+             real count (e.g. "3 / 8") once it finishes building cards -->
+        <span class="trophy-count" id="trophy-count">0 / 0</span>
+
+    </header>
+
+
+    <!-- =========================================================
+         TROPHY GRID
+         Empty on load — trophy.js injects one .trophy-card div
+         per achievement defined in config.js. The CSS grid layout
+         in trophy.css handles columns and wrapping automatically.
+         
+         Uses <main> for semantic correctness (primary page content).
+         ========================================================= -->
+    <main class="trophy-grid" id="trophy-grid">
+        <!-- Cards injected here by trophy.js -->
+    </main>
+
+
+    <!-- =========================================================
+         SCRIPT
+         type="module" is required for ES module imports in trophy.js.
+         Placed at the end of <body> so the DOM elements above
+         (#trophy-grid, #trophy-count) exist before the script runs.
+         ========================================================= -->
+    <script type="module" src="static/coffee/trophy.js"></script>
+
+</body>
+</html>

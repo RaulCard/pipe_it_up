@@ -1,251 +1,172 @@
-var name="Screw You";
+// --- Archive UI (legacy) ---
+// This file is intentionally preserved as the "old UI" easter egg.
+// Cleaned: removed document.write(), fixed duplicate var declarations,
+// removed dead/commented-out code blocks.
 
-function print(nombre){
-	document.write("<br>"+nombre+", Screw You");
+// --- Prompt on load ---
+var user = prompt("Please Enter Your Name", "Sir Dipshit");
+var output = document.createElement('p');
+output.textContent = user + ", Screw You";
+document.body.prepend(output);
+
+// --- Person constructor ---
+function Person(name, age, ugliness) {
+    this.name     = name;
+    this.age      = age;
+    this.ugly     = ugliness;
+    this.DoB      = getBorn;
+    this.siblings = ["Al", "Frank"];
 }
 
-var user = prompt("Please Enter Your Name","Sir Dipshit");
-print(user);
-
-// user = confirm("Are you really this ugly?");
-// if(user){
-// 	alert("I'm glad we can agree");
-// }
-// else{
-// 	alert("Stop lying to yourself");
-// }
-
-function person(name,age,uglyness){
-	this.name = name;
-	this.age = age;
-	this.ugly = uglyness;
-	this.DoB = getBorn;
-	this.siblings = ["Al","Frank"];
+function getBorn() {
+    return 2018 - this.age;
 }
 
-var p1 = new person(user,100,20);
-document.write("<br>"+p1.ugly+" out of 100 uglyness");
-document.write("<br>"+p1.siblings[0]);
+var p1 = new Person(user, 100, 20);
 
-function getBorn(){
-	return 2018 - this.age;
-}
+var statsEl = document.createElement('p');
+statsEl.textContent = p1.ugly + " out of 100 ugliness — sibling: " + p1.siblings[0];
+document.body.appendChild(statsEl);
 
-//document.write("<br>"+p1.DoB()+Math.sqrt(4)); //MATH OPERATION
-
-
-/* BUG RETIRED
-function bug(){
-	alert("Hi");
-}
-setInterval(bug,5000);
-*/
-
-
+// --- Timestamp ---
 var d = new Date();
-document.write("<br>"+"You were confirmed ugly at: "+d+" specifically at: "+d.getHours()+" Hours.");
+var timeEl = document.createElement('p');
+timeEl.textContent = "You were confirmed ugly at: " + d + " specifically at: " + d.getHours() + " Hours.";
+document.body.appendChild(timeEl);
 
-let elem = document.getElementsByClassName("time");
-//elem[1].innerHTML = "Wait, What?";
-var elem1 = document.getElementById("image");
-elem1.src = "/static/images/red.jpg";
+// --- DOM manipulation ---
+var timeElems = document.getElementsByClassName("time");
+var imageEl   = document.getElementById("image");
+if (imageEl) imageEl.src = "/static/images/red.jpg";
 
-//document.body.style.color = "749812";
-elem[1].style.color = "red";
+if (timeElems[1]) timeElems[1].style.color = "red";
 
-var p = document.createElement("p");	//Creates New Element
-var node = document.createTextNode("Additional Info");
+var newP    = document.createElement("p");
+var newText = document.createTextNode("Additional Info");
+newP.appendChild(newText);
+var underElems = document.getElementsByClassName("under");
+if (underElems[0]) underElems[0].appendChild(newP);
 
-p.appendChild(node);
-var elem2 = document.getElementsByClassName("under");
-elem2[0].appendChild(p);
-//elem2[0].removeChild(p);  		//Removes Element
-//p.parentNode.removeChild(p);
-
-// var node = document.createTextNode("New Info");
-// elem2[0].replaceChild(node,p);
-
-function func(){
-	alert("Yes,Master?");
+// --- Misc interactions ---
+function func() {
+    alert("Yes, Master?");
 }
 
-function validate(){
-	var ozzy = document.getElementsByClassName("algo");
-	var fozzy = document.getElementsByClassName("form");
-	if(ozzy[0] == "lifestyle"){
-		//fozzy.form.action = "https://cmpe.sjsu.edu/profile/haluk-ozemek";
-		alert("ozzy!!!");
-	}
+function validate() {
+    var algoInputs = document.getElementsByClassName("algo");
+    if (algoInputs[0] && algoInputs[0].value === "lifestyle") {
+        alert("ozzy!!!");
+    }
 }
 
-
-var images = [
-  "http://www.sololearn.com/uploads/slider/1.jpg",
-  "http://www.sololearn.com/uploads/slider/2.jpg",
-  "http://www.sololearn.com/uploads/slider/3.jpg"
+// --- Image slider ---
+var sliderImages = [
+    "http://www.sololearn.com/uploads/slider/1.jpg",
+    "http://www.sololearn.com/uploads/slider/2.jpg",
+    "http://www.sololearn.com/uploads/slider/3.jpg"
 ];
- var num = 0;
+var sliderIndex = 0;
 
 function next() {
- var slider = document.getElementById("slider");
- num++;
- if(num >= images.length) {
-   num = 0;
- }
- slider.src = images[num];
- console.log("End of Next");
- }
+    sliderIndex = (sliderIndex + 1) % sliderImages.length;
+    document.getElementById("slider").src = sliderImages[sliderIndex];
+}
 
 function prev() {
- var slider = document.getElementById("slider");
- num--;
- if(num < 0) {
-   num = images.length-1;
- }
- slider.src = images[num];
+    sliderIndex = (sliderIndex - 1 + sliderImages.length) % sliderImages.length;
+    document.getElementById("slider").src = sliderImages[sliderIndex];
 }
 
+// --- Color wheel (Udit button) ---
+var colorTick  = 0;
+var wheelActive = false;
 
-
-function whoKnows(){
-	right = false;
-	left = false;
-	down = false;
-	up = false;
+function setIKnow() {
+    if (!wheelActive) {
+        wheelActive = true;
+        setInterval(iKnow, 1);
+    } else {
+        wheelActive = false;
+        document.getElementById("box").style.background       = "orange";
+        document.getElementById("container").style.background = "blue";
+    }
 }
 
-var color = 1;
-var wheel = false;
+var colorSets = [
+    { box: "lime",   container: "DeepPink"  },
+    { box: "red",    container: "white"     },
+    { box: "black",  container: "indigo"    },
+    { box: "pink",   container: "aqua"      },
+    { box: "yellow", container: "RoyalBlue" }
+];
 
-
-function setIKnow(){
-	if(!wheel){
-		wheel = true;
-		setInterval(iKnow,1);	
-	}
-	else if(wheel){
-		wheel = false;
-		clearInterval();
-		document.getElementById("box").style.background = "orange";
-		document.getElementById("container").style.background = "blue";
-	}
-	
-}
-function iKnow(){
-	if(wheel){
-		num += 1
-		color = num*467%5;
-		console.log(color);
-
-		if(color == 0){
-			document.getElementById("box").style.background = "lime";
-			document.getElementById("container").style.background = "DeepPink";
-		}
-		if(color == 1){
-			document.getElementById("box").style.background = "red";
-			document.getElementById("container").style.background = "white";
-		}
-		if(color == 2){
-			document.getElementById("box").style.background = "black";
-			document.getElementById("container").style.background = "indigo";
-		}
-		if(color == 3){
-			document.getElementById("box").style.background = "pink";
-			document.getElementById("container").style.background = "aqua";
-		}
-		if(color == 4){
-			document.getElementById("box").style.background = "yellow";
-			document.getElementById("container").style.background = "RoyalBlue";
-		}
-	}
-}
-var pipe = 50;
-var vid = document.getElementById("trance");
-
-function setWheel(){
-	bubble.innerHTML = "Piped";
-	vid.play();
-	setInterval(reinventingTheWheel,5);
-}
-function reinventingTheWheel(){
-	pipe++;
-	document.getElementById("box").style.width = pipe+"px";
-	document.getElementById("box").style.height = pipe+"px";
-
+function iKnow() {
+    if (!wheelActive) return;
+    colorTick++;
+    var set = colorSets[(colorTick * 467) % colorSets.length];
+    document.getElementById("box").style.background       = set.box;
+    document.getElementById("container").style.background = set.container;
 }
 
-var chaos = document.getElementById("aris");
-chaos.addEventListener("click",whoKnows);
+// --- Pipe It Up (Up button) ---
+var pipeSize = 50;
+var vid      = document.getElementById("trance");
 
-var smozzy = document.getElementById('udit');
-smozzy.addEventListener("click",setIKnow);
-
-var bubble = document.getElementById("lifestyle");
-bubble.addEventListener("click",setWheel);
-
-//NO DoCUMENTATION NEEDED
-
-
-//BOX
-var t = setInterval(move,50);
-// starting position
-var pos = 0; 
-var vert = 0;
-var right = false;
-var down = false;
-var left = false;
-var up = false;
-//our box element
-var box = document.getElementById("box");
-
-function moveRight(){
-	pos += 2;
-   	box.style.left = pos+"px";
+function setWheel() {
+    var bubble = document.getElementById("lifestyle");
+    if (bubble) bubble.innerHTML = "Piped";
+    if (vid)    vid.play();
+    setInterval(reinventingTheWheel, 5);
 }
 
-function moveDown(){
-	vert +=2;
-	box.style.top = vert+"px";
+function reinventingTheWheel() {
+    pipeSize++;
+    var box = document.getElementById("box");
+    box.style.width  = pipeSize + "px";
+    box.style.height = pipeSize + "px";
 }
 
-function moveLeft(){
-	pos -=2;
-	box.style.left = pos+"px";
+// --- Button bindings ---
+document.getElementById("aris").addEventListener("click", whoKnows);
+document.getElementById("udit").addEventListener("click", setIKnow);
+document.getElementById("lifestyle").addEventListener("click", setWheel);
+
+// --- Bouncing box ---
+var boxInterval = setInterval(moveBox, 50);
+var posX  = 0;
+var posY  = 0;
+var goRight = false;
+var goDown  = false;
+var goLeft  = false;
+var goUp    = false;
+var box     = document.getElementById("box");
+
+function whoKnows() {
+    goRight = false;
+    goLeft  = false;
+    goDown  = false;
+    goUp    = false;
 }
 
-function moveUp(){
-	vert -=2;
-	box.style.top = vert+"px";
+function moveBox() {
+    if (!goRight) {
+        posX += 2;
+        box.style.left = posX + "px";
+        if (posX >= 150) { goRight = true; goDown = false; }
+    }
+    if (goRight && !goDown) {
+        posY += 2;
+        box.style.top = posY + "px";
+        if (posY >= 150) { goDown = true; goLeft = false; }
+    }
+    if (goRight && goDown && !goLeft) {
+        posX -= 2;
+        box.style.left = posX + "px";
+        if (posX <= 0) { goLeft = true; goUp = false; }
+    }
+    if (goRight && goDown && goLeft && !goUp) {
+        posY -= 2;
+        box.style.top = posY + "px";
+        if (posY <= 0) { goUp = true; goRight = false; }
+    }
 }
-
-function move() {
-	if(!right){
-		moveRight();
-		if(pos >= 150){
-			right = true;
-			down = false;
-		}
-	}
-	if(right && !down){
-		moveDown();
-		if(vert >= 150){
-			down = true;
-			left = false;
-		}
-	}
-	if(right && down && !left){
-		moveLeft();
-		if(pos <= 0){
-			left = true;
-			up = false;
-		}
-	}
-	if(right && down && left && !up){
-		moveUp();
-		if(vert <= 0){
-			up = true;
-			right = false;
-		}
-	}
-}
-//END OF BOX
